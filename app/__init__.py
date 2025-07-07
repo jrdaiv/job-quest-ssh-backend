@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_login import LoginManager  # Manage user sessions and login/logout state
 from flask_jwt_extended import JWTManager  # Handle JWT-based authentication
@@ -24,6 +25,8 @@ def create_app():
     # Set the secret key used for encoding JWTs
     app.config["JWT_SECRET_KEY"] = cf.JWT_SECRET_KEY
 
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    
     # Initialize and bind extensions to the Flask app
     db.init_app(app)              # Set up SQLAlchemy database connection
     login_manager.init_app(app)   # Set up Flask-Login
